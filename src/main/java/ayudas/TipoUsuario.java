@@ -1,4 +1,4 @@
-package com.example.APIClassRoom.ayudas;
+package ayudas;
 
 public enum TipoUsuario {
     Estudiante,

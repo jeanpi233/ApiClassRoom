@@ -1,18 +1,27 @@
-package com.example.APIClassRoom.modelos;
+package modelos;
 
-import com.example.APIClassRoom.ayudas.TipoUsuario;
-import jakarta.persistence.Entity;
+import ayudas.TipoUsuario;
+import jakarta.persistence.*;
 
 @Entity
+@Table(name = "usuarios")
 public class Usuario {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_usuario")
     private Integer id;
+    @Column(name = "nombre", nullable = false,length = 100)
     private String nombre;
+    @Column(name = "correo_electronico", unique = true, nullable = false, length = 200)
     private String correoElectronico;
+    @Column (name = "contraseña",unique = true, nullable = false, length = 120)
     private String contraseña;
+    @Column (name = "telefono", unique = true,length = 15)
     private String telefono;
     private TipoUsuario tipoUsuario;
+
     public Usuario() {
+
     }
 
     public Usuario(Integer id, String nombre, String correoElectronico, String contraseña, String telefono, TipoUsuario tipoUsuario) {
