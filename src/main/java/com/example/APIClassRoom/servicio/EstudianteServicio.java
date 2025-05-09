@@ -21,7 +21,7 @@ public class EstudianteServicio {
     public Estudiante modificarEstudiante(Integer id, Estudiante datosNuevos) {
         Optional<Estudiante> encontrado = this.repositorio.findById(id);
         if (encontrado.isPresent()) {
-            datosNuevos.setId_estudiante(id);
+            datosNuevos.setId(id);
             return this.repositorio.save(datosNuevos);
         } else {
             throw new RuntimeException("Estudiante con ID " + id + " no encontrado");

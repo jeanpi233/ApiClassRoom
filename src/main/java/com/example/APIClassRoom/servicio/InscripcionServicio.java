@@ -23,7 +23,7 @@ public class InscripcionServicio {
     public Inscripcion modificarInscripcion(Integer id, Inscripcion datosNuevos) {
         Optional<Inscripcion> encontrado = this.repositorio.findById(id);
         if (encontrado.isPresent()) {
-            datosNuevos.setId_inscripcion(id); // Asegúrate que tu modelo tenga setId_inscripcion()
+            datosNuevos.setId(id); // Asegúrate que tu modelo tenga setId()
             return this.repositorio.save(datosNuevos);
         } else {
             throw new RuntimeException("Inscripción con ID " + id + " no encontrada");

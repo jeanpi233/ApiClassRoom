@@ -23,7 +23,7 @@ public class AsistenciaServicio {
     public Asistencia modificarAsistencia(Integer id, Asistencia datosNuevos) {
         Optional<Asistencia> encontrado = this.repositorio.findById(id);
         if (encontrado.isPresent()) {
-            datosNuevos.setId_asistencia(id); // Asegúrate de tener un setter para el ID en el modelo
+            datosNuevos.setId(id); // Asegúrate de tener un setter para el ID en el modelo
             return this.repositorio.save(datosNuevos);
         } else {
             throw new RuntimeException("Asistencia con ID " + id + " no encontrada");

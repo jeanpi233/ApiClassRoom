@@ -4,78 +4,51 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 import java.sql.Timestamp;
+import java.time.LocalDate;
 
 @Entity
-@Table(name = "inscripcion")
+@Table(name = "inscripciones")
 public class Inscripcion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Integer id_inscripcion;
+    @Column(name = "id_inscripcion")
+    private Integer id;
 
-    @Column(name = "fechaInscripcion")
-    private Timestamp fechaInscripcion;
+    @Column(name = "fecha_inscripcion", columnDefinition = "FECHA_POR_DEFECTO_FECHA_ACTUAL")
+    private LocalDate fechaInscripcion;
 
     @ManyToOne
-    @JoinColumn(name = "fk_estudiante", referencedColumnName = "id")
+    @JoinColumn(name = "fk_estudiante", referencedColumnName = "id_estudiante")
     @JsonBackReference
     private Estudiante estudiante;
 
     @ManyToOne
-    @JoinColumn(name = "fk_curso", referencedColumnName = "id")
+    @JoinColumn(name = "fk_curso", referencedColumnName = "id_curso")
     @JsonBackReference
     private Curso curso;
 
-    @ManyToOne
-    @JoinColumn(name = "usuario_id")
-    private Usuario usuario;
 
     public Inscripcion() {
     }
 
-    public Inscripcion(Timestamp fechaInscripcion, Integer id_inscripcion) {
+    public Inscripcion(Integer id, LocalDate fechaInscripcion) {
+        this.id = id;
         this.fechaInscripcion = fechaInscripcion;
-        this.id_inscripcion = id_inscripcion;
     }
 
-    // Getters and setters
-    public Integer getId_inscripcion() {
-        return id_inscripcion;
+    public Integer getId() {
+        return id;
     }
 
-    public void setId_inscripcion(Integer id_inscripcion) {
-        this.id_inscripcion = id_inscripcion;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public Timestamp getFechaInscripcion() {
+    public LocalDate getFechaInscripcion() {
         return fechaInscripcion;
     }
 
-    public void setFechaInscripcion(Timestamp fechaInscripcion) {
+    public void setFechaInscripcion(LocalDate fechaInscripcion) {
         this.fechaInscripcion = fechaInscripcion;
-    }
-
-    public Estudiante getEstudiante() {
-        return estudiante;
-    }
-
-    public void setEstudiante(Estudiante estudiante) {
-        this.estudiante = estudiante;
-    }
-
-    public Curso getCurso() {
-        return curso;
-    }
-
-    public void setCurso(Curso curso) {
-        this.curso = curso;
-    }
-
-    public Usuario getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
     }
 }

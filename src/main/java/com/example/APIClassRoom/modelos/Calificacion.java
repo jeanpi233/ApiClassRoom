@@ -3,44 +3,56 @@ package com.example.APIClassRoom.modelos;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "calificacion")
+@Table(name = "calificaciones")
 public class Calificacion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Integer id_calificacion;
+    @Column(name = "id_calificacion")
+    private Integer id;
 
-    @Column(name = "nota", nullable = false, length = 10)
-    private Double nota;
+    @Column(nullable = false)
+    private BigDecimal nota;
 
-    @Column(name = "fechaEvaluacion", nullable = false, length = 90)
+    @Column(name = "fecha_evaluacion", nullable = false)
     private LocalDate fechaEvaluacion;
 
     @ManyToOne
-    @JoinColumn(name = "fk_estudiante", referencedColumnName = "id")
+    @JoinColumn(name = "fk_materia", referencedColumnName = "id_materia")
+    @JsonBackReference
+    private Materia materia;
+
+    @ManyToOne
+    @JoinColumn(name = "fk_estudiante", referencedColumnName = "id_estudiante")
     @JsonBackReference
     private Estudiante estudiante;
 
     public Calificacion() {
     }
 
-    public Calificacion(Integer id_calificacion, Double nota, LocalDate fechaEvaluacion, Estudiante estudiante) {
-        this.id_calificacion = id_calificacion;
+    public Calificacion(Integer id, BigDecimal nota, LocalDate fechaEvaluacion) {
+        this.id = id;
         this.nota = nota;
         this.fechaEvaluacion = fechaEvaluacion;
-        this.estudiante = estudiante;
     }
 
-    // Getters and setters
-    public Estudiante getEstudiante() {
-        return estudiante;
+    public Integer getId() {
+        return id;
     }
 
-    public void setEstudiante(Estudiante estudiante) {
-        this.estudiante = estudiante;
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public BigDecimal getNota() {
+        return nota;
+    }
+
+    public void setNota(BigDecimal nota) {
+        this.nota = nota;
     }
 
     public LocalDate getFechaEvaluacion() {
@@ -49,21 +61,5 @@ public class Calificacion {
 
     public void setFechaEvaluacion(LocalDate fechaEvaluacion) {
         this.fechaEvaluacion = fechaEvaluacion;
-    }
-
-    public Integer getId_calificacion() {
-        return id_calificacion;
-    }
-
-    public void setId_calificacion(Integer id_calificacion) {
-        this.id_calificacion = id_calificacion;
-    }
-
-    public Double getNota() {
-        return nota;
-    }
-
-    public void setNota(Double nota) {
-        this.nota = nota;
     }
 }

@@ -4,26 +4,26 @@ import com.example.APIClassRoom.ayudas.TipoUsuario;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
-@Table(name = "estudiante")
+@Table(name = "estudiantes")
 public class Estudiante {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Integer id_estudiante;
+    @Column(name = "id_estudiante")
+    private Integer id;
 
-    @Column(name = "grado", unique = true, length = 100)
-    private String grado;
+    @Column(name = "grado", nullable = false)
+    private Integer grado;
 
-    @Column(name = "fechaNacimiento", unique = true, length = 100)
-    private String fechaNacimiento;
+    @Column(name = "fecha_Nacimiento", nullable = false)
+    private LocalDate fechaNacimiento;
 
-    @Column(name = "diccionario", unique = true, length = 100)
+    @Column(nullable = false, length = 250)
     private String diccionario;
 
-    private TipoUsuario tipoUsuario;
 
     @OneToMany(mappedBy = "estudiante")
     @JsonManagedReference
@@ -37,39 +37,42 @@ public class Estudiante {
     @JsonManagedReference
     private List<Asistencia> asistencias;
 
+    @OneToOne
+    @JoinColumn(name = "fk_usuario", referencedColumnName = "id_usuario")
+    @JsonManagedReference(value = "estudiante-usuario")
+    private Usuario usuario;
+
     public Estudiante() {
     }
 
-    public Estudiante(Integer id_estudiante, String grado, String fechaNacimiento, String diccionario, TipoUsuario tipoUsuario) {
-        this.id_estudiante = id_estudiante;
+    public Estudiante(Integer id, Integer grado, LocalDate fechaNacimiento, String diccionario) {
+        this.id = id;
         this.grado = grado;
         this.fechaNacimiento = fechaNacimiento;
         this.diccionario = diccionario;
-        this.tipoUsuario = tipoUsuario;
     }
 
-    // Getters and setters
-    public Integer getId_estudiante() {
-        return id_estudiante;
+    public Integer getId() {
+        return id;
     }
 
-    public void setId_estudiante(Integer id_estudiante) {
-        this.id_estudiante = id_estudiante;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public String getGrado() {
+    public Integer getGrado() {
         return grado;
     }
 
-    public void setGrado(String grado) {
+    public void setGrado(Integer grado) {
         this.grado = grado;
     }
 
-    public String getFechaNacimiento() {
+    public LocalDate getFechaNacimiento() {
         return fechaNacimiento;
     }
 
-    public void setFechaNacimiento(String fechaNacimiento) {
+    public void setFechaNacimiento(LocalDate fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
 
@@ -79,13 +82,5 @@ public class Estudiante {
 
     public void setDiccionario(String diccionario) {
         this.diccionario = diccionario;
-    }
-
-    public TipoUsuario getTipoUsuario() {
-        return tipoUsuario;
-    }
-
-    public void setTipoUsuario(TipoUsuario tipoUsuario) {
-        this.tipoUsuario = tipoUsuario;
     }
 }

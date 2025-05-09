@@ -7,24 +7,24 @@ import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "curso")
+@Table(name = "cursos")
 public class Curso {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Integer id_curso;
+    @Column(name = "id_curso")
+    private Integer id;
 
-    @Column(name = "nombre", nullable = false, length = 100)
+    @Column(nullable = false, length = 100)
     private String nombre;
 
     @ManyToOne
-    @JoinColumn(name = "fk_docente", referencedColumnName = "id")
-    @JsonBackReference
+    @JoinColumn(name = "fk_docente", referencedColumnName = "id_docente")
+    @JsonBackReference(value = "docente-curso")
     private Docente docente;
 
     @OneToMany(mappedBy = "curso")
     @JsonManagedReference
-    private List<Inscripcion> inscripciones;
+    private List<Materia> materias;
 
     @OneToMany(mappedBy = "curso")
     @JsonManagedReference
@@ -32,24 +32,24 @@ public class Curso {
 
     @OneToMany(mappedBy = "curso")
     @JsonManagedReference
-    private List<Materia> materias;
+    private List<Inscripcion> inscripciones;
 
     public Curso() {
     }
 
-    public Curso(Integer id_curso, String nombre, Docente docente) {
-        this.id_curso = id_curso;
+    public Curso(Integer id, String nombre, Docente docente) {
+        this.id = id;
         this.nombre = nombre;
         this.docente = docente;
     }
 
     // Getters and setters
-    public Integer getId_curso() {
-        return id_curso;
+    public Integer getId() {
+        return id;
     }
 
-    public void setId_curso(Integer id_curso) {
-        this.id_curso = id_curso;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getNombre() {

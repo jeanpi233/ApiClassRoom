@@ -29,7 +29,7 @@ public class DocenteServicio {
         try {
             Optional<Docente> docenteExistente = this.repositorio.findById(id);
             if (docenteExistente.isPresent()) {
-                datosDocente.setId_docente(id); // Asegurar que se actualiza el correcto
+                datosDocente.setId(id); // Asegurar que se actualiza el correcto
                 return this.repositorio.save(datosDocente);
             } else {
                 throw new Exception(MensajesAPI.DOCENTE_NO_ENCOTRADO.getTexto());

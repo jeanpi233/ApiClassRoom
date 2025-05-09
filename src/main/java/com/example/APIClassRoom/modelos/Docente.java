@@ -1,49 +1,46 @@
 package com.example.APIClassRoom.modelos;
 
-import com.example.APIClassRoom.ayudas.TipoUsuario;
+
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.List;
 
 @Entity
-@Table(name = "docente")
+@Table(name = "docentes")
 public class Docente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Integer id_docente;
+    @Column(name = "id_docente")
+    private Integer id;
 
-    @Column(name = "especialidad", unique = true, length = 100)
+    @Column(unique = true, length = 100)
     private String especialidad;
 
-    private TipoUsuario tipoUsuario;
 
     @OneToOne
-    @JoinColumn(name = "fk_usuario", referencedColumnName = "id")
-    @JsonManagedReference
+    @JoinColumn(name = "fk_usuario", referencedColumnName = "id_usuario")
+    @JsonManagedReference(value = "docente-usuario")
     private Usuario usuario;
 
     @OneToMany(mappedBy = "docente")
-    @JsonManagedReference
+    @JsonManagedReference(value = "docente-usuario")
     private List<Curso> cursos;
 
     public Docente() {
     }
 
-    public Docente(Integer id_docente, String especialidad, TipoUsuario tipoUsuario) {
-        this.id_docente = id_docente;
+    public Docente(Integer id, String especialidad) {
+        this.id = id;
         this.especialidad = especialidad;
-        this.tipoUsuario = tipoUsuario;
     }
 
-    // Getters and setters
-    public Integer getId_docente() {
-        return id_docente;
+    public Integer getId() {
+        return id;
     }
 
-    public void setId_docente(Integer id_docente) {
-        this.id_docente = id_docente;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getEspecialidad() {
@@ -52,13 +49,5 @@ public class Docente {
 
     public void setEspecialidad(String especialidad) {
         this.especialidad = especialidad;
-    }
-
-    public TipoUsuario getTipoUsuario() {
-        return tipoUsuario;
-    }
-
-    public void setTipoUsuario(TipoUsuario tipoUsuario) {
-        this.tipoUsuario = tipoUsuario;
     }
 }

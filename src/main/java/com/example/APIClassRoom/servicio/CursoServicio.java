@@ -23,7 +23,7 @@ public class CursoServicio {
     public Curso modificarCurso(Integer id, Curso datosNuevos) {
         Optional<Curso> encontrado = this.repositorio.findById(id);
         if (encontrado.isPresent()) {
-            datosNuevos.setId_curso(id); // Asegúrate que tu modelo tenga setId_curso()
+            datosNuevos.setId(id); // Asegúrate que tu modelo tenga setId()
             return this.repositorio.save(datosNuevos);
         } else {
             throw new RuntimeException("Curso con ID " + id + " no encontrado");

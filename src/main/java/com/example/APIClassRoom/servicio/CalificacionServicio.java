@@ -23,7 +23,7 @@ public class CalificacionServicio {
     public Calificacion modificarCalificacion(Integer id, Calificacion datosNuevos) {
         Optional<Calificacion> encontrado = this.repositorio.findById(id);
         if (encontrado.isPresent()) {
-            datosNuevos.setId_calificacion(id); // Asegúrate de tener este setter en tu modelo
+            datosNuevos.setId(id); // Asegúrate de tener este setter en tu modelo
             return this.repositorio.save(datosNuevos);
         } else {
             throw new RuntimeException("Calificación con ID " + id + " no encontrada");

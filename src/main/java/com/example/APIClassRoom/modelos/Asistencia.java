@@ -1,51 +1,51 @@
 package com.example.APIClassRoom.modelos;
 
 import com.example.APIClassRoom.ayudas.Estado;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "asistencia")
+@Table(name = "asistencias")
 public class Asistencia {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_asistencia")
-    private Integer id_asistencia;
+    private Integer id;
 
-    @Column(name = "fecha", nullable = false, length = 100)
+    @Column(name = "fecha", nullable = false)
     private LocalDate fecha;
 
-    @Column(name = "estado", nullable = false, length = 100)
+    @Column(name = "estado", nullable = false)
     private Estado estado;
 
     @ManyToOne
-    @JoinColumn(name = "fk_estudiante", referencedColumnName = "id")
-    @JsonManagedReference
+    @JoinColumn(name = "fk_estudiante", referencedColumnName = "id_estudiante")
+    @JsonBackReference
     private Estudiante estudiante;
 
     @ManyToOne
-    @JoinColumn(name = "fk_curso", referencedColumnName = "id")
-    @JsonManagedReference
+    @JoinColumn(name = "fk_curso", referencedColumnName = "id_curso")
+    @JsonBackReference
     private Curso curso;
 
     public Asistencia() {
     }
 
-    public Asistencia(Integer id_asistencia, LocalDate fecha, Estado estado) {
-        this.id_asistencia = id_asistencia;
+    public Asistencia(Integer id, LocalDate fecha, Estado estado) {
+        this.id = id;
         this.fecha = fecha;
         this.estado = estado;
     }
 
     // Getters and setters
-    public Integer getId_asistencia() {
-        return id_asistencia;
+    public Integer getId() {
+        return id;
     }
 
-    public void setId_asistencia(Integer id_asistencia) {
-        this.id_asistencia = id_asistencia;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public LocalDate getFecha() {

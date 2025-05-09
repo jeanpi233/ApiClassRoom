@@ -23,7 +23,7 @@ public class MateriaServicio {
     public Materia modificarMateria(Integer id, Materia datosNuevos) {
         Optional<Materia> encontrado = this.repositorio.findById(id);
         if (encontrado.isPresent()) {
-            datosNuevos.setId_materia(id); // Asegúrate que tu modelo tenga setId_materia()
+            datosNuevos.setId(id); // Asegúrate que tu modelo tenga setId()
             return this.repositorio.save(datosNuevos);
         } else {
             throw new RuntimeException("Materia con ID " + id + " no encontrada");

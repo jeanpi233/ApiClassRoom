@@ -23,7 +23,7 @@ public class UsuarioServicio {
     public Usuario modificarUsuario(Integer id, Usuario datosNuevos) { // Usando Integer
         Optional<Usuario> encontrado = this.repositorio.findById(id);
         if (encontrado.isPresent()) {
-            datosNuevos.setId_usuario(id);  // Asegúrate de que el setter sea correcto
+            datosNuevos.setId(id);  // Asegúrate de que el setter sea correcto
             return this.repositorio.save(datosNuevos);
         } else {
             throw new RuntimeException("Usuario con ID " + id + " no encontrado");

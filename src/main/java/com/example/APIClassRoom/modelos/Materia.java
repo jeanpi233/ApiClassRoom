@@ -11,37 +11,35 @@ import java.util.List;
 public class Materia {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Integer id_materia;
+    @Column(name = "id_materia")
+    private Integer id;
 
-    @Column(name = "nombre", nullable = false, length = 100)
+    @Column( nullable = false, length = 100)
     private String nombre;
 
     @ManyToOne
-    @JoinColumn(name = "fk_curso", referencedColumnName = "id")
+    @JoinColumn(name = "fk_curso", referencedColumnName = "id_curso")
     @JsonBackReference
     private Curso curso;
 
     @OneToMany(mappedBy = "materia")
     @JsonManagedReference
-    private List<Inscripcion> inscripciones;
+    private List<Calificacion> calificaciones;
 
     public Materia() {
     }
 
-    public Materia(Integer id_materia, String nombre, Curso curso) {
-        this.id_materia = id_materia;
+    public Materia(Integer id, String nombre) {
+        this.id = id;
         this.nombre = nombre;
-        this.curso = curso;
     }
 
-    // Getters and setters
-    public Integer getId_materia() {
-        return id_materia;
+    public Integer getId() {
+        return id;
     }
 
-    public void setId_materia(Integer id_materia) {
-        this.id_materia = id_materia;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getNombre() {
@@ -50,13 +48,5 @@ public class Materia {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
-    }
-
-    public Curso getCurso() {
-        return curso;
-    }
-
-    public void setCurso(Curso curso) {
-        this.curso = curso;
     }
 }
