@@ -36,7 +36,7 @@ public class Usuario {
     private Docente docente;
 
     @OneToOne(mappedBy = "usuario")
-    @JsonBackReference(value = "estudinate-usuario")
+    @JsonBackReference(value = "estudiante-usuario")
     private Estudiante estudiante;
 
     public Usuario() {

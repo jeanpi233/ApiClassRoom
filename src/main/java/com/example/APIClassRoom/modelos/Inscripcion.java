@@ -14,7 +14,7 @@ public class Inscripcion {
     @Column(name = "id_inscripcion")
     private Integer id;
 
-    @Column(name = "fecha_inscripcion", columnDefinition = "FECHA_POR_DEFECTO_FECHA_ACTUAL")
+    @Column(name = "fecha_inscripcion")
     private LocalDate fechaInscripcion;
 
     @ManyToOne
@@ -31,9 +31,11 @@ public class Inscripcion {
     public Inscripcion() {
     }
 
-    public Inscripcion(Integer id, LocalDate fechaInscripcion) {
+    public Inscripcion(Integer id, LocalDate fechaInscripcion, Estudiante estudiante, Curso curso) {
         this.id = id;
         this.fechaInscripcion = fechaInscripcion;
+        this.estudiante = estudiante;
+        this.curso = curso;
     }
 
     public Integer getId() {
@@ -50,5 +52,21 @@ public class Inscripcion {
 
     public void setFechaInscripcion(LocalDate fechaInscripcion) {
         this.fechaInscripcion = fechaInscripcion;
+    }
+
+    public Estudiante getEstudiante() {
+        return estudiante;
+    }
+
+    public void setEstudiante(Estudiante estudiante) {
+        this.estudiante = estudiante;
+    }
+
+    public Curso getCurso() {
+        return curso;
+    }
+
+    public void setCurso(Curso curso) {
+        this.curso = curso;
     }
 }
