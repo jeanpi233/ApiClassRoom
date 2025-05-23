@@ -21,13 +21,27 @@ public class Estudiante {
     @Column(name = "fecha_Nacimiento", nullable = false)
     private LocalDate fechaNacimiento;
 
-    @Column(name = "direcion", nullable = false, length = 255 )
+    @Column(name = "direccion", nullable = false, length = 255 )
     private String direccion;
 
     @OneToOne
     @JoinColumn(name = "fk_usuario", referencedColumnName = "id_usuario")
     @JsonManagedReference(value = "estudiante-usuario")
     private Usuario usuario;
+
+    @OneToMany(mappedBy = "estudiante")
+    @JsonManagedReference(value = "estudiante-asistencias")
+    private List<Asistencia> asistencias;
+
+    @OneToMany(mappedBy = "estudiante")
+    @JsonManagedReference(value = "estudiante-calificaciones")
+    private List<Calificacion> calificaciones;
+
+    @OneToMany(mappedBy = "estudiante")
+    @JsonManagedReference(value = "estudiante-inscripciones")
+    private List<Inscripcion> inscripciones;
+
+
 
     public Estudiante() {
     }

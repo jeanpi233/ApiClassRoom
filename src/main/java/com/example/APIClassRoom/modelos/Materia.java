@@ -19,6 +19,7 @@ public class Materia {
 
     @ManyToOne
     @JoinColumn(name = "id_curso", nullable = false)
+    @JsonBackReference(value = "curso-materias")
     private Curso curso;
 
 

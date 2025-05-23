@@ -19,11 +19,13 @@ public class Inscripcion {
     private LocalDate fechaInscripcion;
 
     @ManyToOne
-    @JoinColumn(name = "fk_estudiante", referencedColumnName = "id_estudiante")
+    @JoinColumn(name = "id_estudiante", nullable = false)
+    @JsonBackReference(value = "estudiante-inscripciones")
     private Estudiante estudiante;
 
     @ManyToOne
-    @JoinColumn(name = "fk_curso", referencedColumnName = "id_curso")
+    @JoinColumn(name = "id_curso", nullable = false)
+    @JsonBackReference(value = "curso-inscripciones")
     private Curso curso;
 
 

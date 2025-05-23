@@ -23,10 +23,12 @@ public class Calificacion {
 
     @ManyToOne
     @JoinColumn(name = "id_materia", nullable = false)
+    @JsonBackReference(value = "materia-calificaciones")
     private Materia materia;
 
     @ManyToOne
     @JoinColumn(name = "id_estudiante", nullable = false)
+    @JsonBackReference(value = "estudiante-calificaciones")
     private Estudiante estudiante;
 
     public Calificacion() {

@@ -1,10 +1,10 @@
 /Usuario
 {
-  "nombre": "Jeanpierry moreno yepez",
-  "correo": "Thegonorrea@gmail.com",
-  "clave": "admin123*",
-  "telefono": "32259623432",
-  "tipoUsuario": "DOCENTE"
+  "nombre": "Juan fernando torres zapata",
+  "correo": "Juanyya06@gmail.com",
+  "clave": "admi123",
+  "telefono": "32159956741",
+  "tipoUsuario": "ESTUDIANTE"
 }
 /Docente
 {
@@ -17,9 +17,9 @@
 {
   "grado": 11,
   "fechaNacimiento": "2007-08-15",
-  "diccionario": "física",
+  "direccion": "calle 70 #48a-28",
   "usuario": {
-    "id": 1
+    "id": 2
   }
 }
 /Curso
@@ -39,7 +39,7 @@
 /Asistencia
 {
   "fecha": "2025-05-10",
-  "estado": "PRESENTE",
+  "estado": "Presente",
   "estudiante": {
     "id": 1
   },
