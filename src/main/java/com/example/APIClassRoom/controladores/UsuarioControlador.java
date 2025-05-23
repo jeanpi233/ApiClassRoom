@@ -15,7 +15,7 @@ public class UsuarioControlador {
     UsuarioServicio servicio;
 
     // Guardar nuevo usuario
-    @PostMapping
+    @PostMapping (consumes = "application/json")
     public ResponseEntity<?> guardar(@RequestBody Usuario datosEnviadosPorElCliente) {
         try {
             return ResponseEntity

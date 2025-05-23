@@ -9,6 +9,7 @@ import java.util.List;
 @Entity
 @Table(name = "docentes")
 public class Docente {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_docente")
@@ -24,7 +25,7 @@ public class Docente {
     private Usuario usuario;
 
     @OneToMany(mappedBy = "docente")
-    @JsonManagedReference(value = "docente-usuario")
+    @JsonManagedReference
     private List<Curso> cursos;
 
     public Docente() {

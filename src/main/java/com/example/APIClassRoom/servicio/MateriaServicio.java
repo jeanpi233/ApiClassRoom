@@ -1,5 +1,6 @@
 package com.example.APIClassRoom.servicio;
 
+import com.example.APIClassRoom.ayudas.MensajesAPI;
 import com.example.APIClassRoom.modelos.Materia;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,41 +15,60 @@ public class MateriaServicio {
     @Autowired
     IMateriaRepositorio repositorio;
 
-    // Guardar materia
-    public Materia guardarMateria(Materia materia) {
-        return this.repositorio.save(materia);
-    }
-
-    // Modificar materia
-    public Materia modificarMateria(Integer id, Materia datosNuevos) {
-        Optional<Materia> encontrado = this.repositorio.findById(id);
-        if (encontrado.isPresent()) {
-            datosNuevos.setId(id); // Asegúrate que tu modelo tenga setId()
-            return this.repositorio.save(datosNuevos);
-        } else {
-            throw new RuntimeException("Materia con ID " + id + " no encontrada");
+    public Materia guardarMateria(Materia materia) throws Exception {
+        try {
+            return this.repositorio.save(materia);
+        } catch (Exception error) {
+            throw new Exception(error.getMessage());
         }
     }
 
-    // Buscar materia por ID
-    public Materia buscarMateriaPorId(Integer id) {
-        return this.repositorio.findById(id)
-                .orElseThrow(() -> new RuntimeException("Materia con ID " + id + " no encontrada"));
+    public Materia modificarMateria(Integer id, Materia datosNuevos) throws Exception {
+        try {
+            Optional<Materia> encontrado = this.repositorio.findById(id);
+            if (encontrado.isPresent()) {
+                datosNuevos.setId(id);
+                return this.repositorio.save(datosNuevos);
+            } else {
+                throw new Exception(MensajesAPI.MATERIA_NO_ENCONTRADA.getTexto());
+            }
+        } catch (Exception error) {
+            throw new Exception(error.getMessage());
+        }
     }
 
-    // Buscar todas las materias
-    public List<Materia> buscarTodasMaterias() {
-        return this.repositorio.findAll();
+    public Materia buscarMateriaPorId(Integer id) throws Exception {
+        try {
+            Optional<Materia> materia = this.repositorio.findById(id);
+            if (materia.isPresent()) {
+                return materia.get();
+            } else {
+                throw new Exception(MensajesAPI.MATERIA_NO_ENCONTRADA.getTexto());
+            }
+        } catch (Exception error) {
+            throw new Exception(error.getMessage());
+        }
     }
 
-    // Eliminar materia
-    public String eliminarMateria(Integer id) {
-        Optional<Materia> encontrado = this.repositorio.findById(id);
-        if (encontrado.isPresent()) {
-            this.repositorio.deleteById(id);
-            return "Materia eliminada correctamente";
-        } else {
-            throw new RuntimeException("Materia con ID " + id + " no encontrada");
+    public List<Materia> buscarTodasMaterias() throws Exception {
+        try {
+            return this.repositorio.findAll();
+        } catch (Exception error) {
+            throw new Exception(error.getMessage());
+        }
+    }
+
+    public boolean eliminarMateria(Integer id) throws Exception {
+        try {
+            Optional<Materia> materia = this.repositorio.findById(id);
+            if (materia.isPresent()) {
+                this.repositorio.deleteById(id);
+                return true;
+            } else {
+                throw new Exception(MensajesAPI.MATERIA_NO_ENCONTRADA.getTexto());
+            }
+        } catch (Exception error) {
+            throw new Exception(error.getMessage());
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.example.APIClassRoom.servicio;
 
+import com.example.APIClassRoom.ayudas.MensajesAPI;
 import com.example.APIClassRoom.modelos.Estudiante;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,36 +15,60 @@ public class EstudianteServicio {
     @Autowired
     IEstudianteRepositorio repositorio;
 
-    public Estudiante guardarEstudiante(Estudiante estudiante) {
-        return this.repositorio.save(estudiante);
-    }
-
-    public Estudiante modificarEstudiante(Integer id, Estudiante datosNuevos) {
-        Optional<Estudiante> encontrado = this.repositorio.findById(id);
-        if (encontrado.isPresent()) {
-            datosNuevos.setId(id);
-            return this.repositorio.save(datosNuevos);
-        } else {
-            throw new RuntimeException("Estudiante con ID " + id + " no encontrado");
+    public Estudiante guardarEstudiante(Estudiante estudiante) throws Exception {
+        try {
+            return this.repositorio.save(estudiante);
+        } catch (Exception error) {
+            throw new Exception(error.getMessage());
         }
     }
 
-    public Estudiante buscarEstudiantePorId(Integer id) {
-        return this.repositorio.findById(id)
-                .orElseThrow(() -> new RuntimeException("Estudiante con ID " + id + " no encontrado"));
+    public Estudiante modificarEstudiante(Integer id, Estudiante datosNuevos) throws Exception {
+        try {
+            Optional<Estudiante> encontrado = this.repositorio.findById(id);
+            if (encontrado.isPresent()) {
+                datosNuevos.setId(id);
+                return this.repositorio.save(datosNuevos);
+            } else {
+                throw new Exception(MensajesAPI.ESTUDINATE_NO_ENCONTRADO.getTexto());
+            }
+        } catch (Exception error) {
+            throw new Exception(error.getMessage());
+        }
     }
 
-    public List<Estudiante> buscarTodosEstudiantes() {
-        return this.repositorio.findAll();
+    public Estudiante buscarEstudiantePorId(Integer id) throws Exception {
+        try {
+            Optional<Estudiante> estudiante = this.repositorio.findById(id);
+            if (estudiante.isPresent()) {
+                return estudiante.get();
+            } else {
+                throw new Exception(MensajesAPI.ESTUDINATE_NO_ENCONTRADO.getTexto());
+            }
+        } catch (Exception error) {
+            throw new Exception(error.getMessage());
+        }
     }
 
-    public String eliminarEstudiante(Integer id) {
-        Optional<Estudiante> encontrado = this.repositorio.findById(id);
-        if (encontrado.isPresent()) {
-            this.repositorio.deleteById(id);
-            return "Estudiante eliminado correctamente";
-        } else {
-            throw new RuntimeException("Estudiante con ID " + id + " no encontrado");
+    public List<Estudiante> buscarTodosEstudiantes() throws Exception {
+        try {
+            return this.repositorio.findAll();
+        } catch (Exception error) {
+            throw new Exception(error.getMessage());
+        }
+    }
+
+    public boolean eliminarEstudiante(Integer id) throws Exception {
+        try {
+            Optional<Estudiante> estudiante = this.repositorio.findById(id);
+            if (estudiante.isPresent()) {
+                this.repositorio.deleteById(id);
+                return true;
+            } else {
+                throw new Exception(MensajesAPI.ESTUDINATE_NO_ENCONTRADO.getTexto());
+            }
+        } catch (Exception error) {
+            throw new Exception(error.getMessage());
         }
     }
 }

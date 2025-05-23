@@ -9,6 +9,7 @@ import java.util.List;
 @Entity
 @Table(name = "cursos")
 public class Curso {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_curso")
@@ -19,28 +20,15 @@ public class Curso {
 
     @ManyToOne
     @JoinColumn(name = "fk_docente", referencedColumnName = "id_docente")
-    @JsonBackReference(value = "docente-curso")
+    @JsonBackReference
     private Docente docente;
-
-    @OneToMany(mappedBy = "curso")
-    @JsonManagedReference
-    private List<Materia> materias;
-
-    @OneToMany(mappedBy = "curso")
-    @JsonManagedReference
-    private List<Asistencia> asistencias;
-
-    @OneToMany(mappedBy = "curso")
-    @JsonManagedReference
-    private List<Inscripcion> inscripciones;
 
     public Curso() {
     }
 
-    public Curso(Integer id, String nombre, Docente docente) {
+    public Curso(Integer id, String nombre) {
         this.id = id;
         this.nombre = nombre;
-        this.docente = docente;
     }
 
     // Getters and setters

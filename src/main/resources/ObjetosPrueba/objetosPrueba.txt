@@ -4,7 +4,7 @@
   "correo": "Thegonorrea@gmail.com",
   "clave": "admin123*",
   "telefono": "32259623432",
-  "tipoUsuario": "Docente"
+  "tipoUsuario": "DOCENTE"
 }
 /Docente
 {

@@ -21,21 +21,8 @@ public class Estudiante {
     @Column(name = "fecha_Nacimiento", nullable = false)
     private LocalDate fechaNacimiento;
 
-    @Column(nullable = false, length = 250)
-    private String diccionario;
-
-
-    @OneToMany(mappedBy = "estudiante")
-    @JsonManagedReference
-    private List<Inscripcion> inscripciones;
-
-    @OneToMany(mappedBy = "estudiante")
-    @JsonManagedReference
-    private List<Calificacion> calificaciones;
-
-    @OneToMany(mappedBy = "estudiante")
-    @JsonManagedReference
-    private List<Asistencia> asistencias;
+    @Column(name = "direcion", nullable = false, length = 255 )
+    private String direccion;
 
     @OneToOne
     @JoinColumn(name = "fk_usuario", referencedColumnName = "id_usuario")
@@ -45,11 +32,22 @@ public class Estudiante {
     public Estudiante() {
     }
 
-    public Estudiante(Integer id, Integer grado, LocalDate fechaNacimiento, String diccionario) {
+
+    public Estudiante(Usuario usuario,Integer id, Integer grado, LocalDate fechaNacimiento, String direccion) {
         this.id = id;
         this.grado = grado;
         this.fechaNacimiento = fechaNacimiento;
-        this.diccionario = diccionario;
+        this.direccion = direccion;
+        this.usuario = usuario;
+
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
     public Integer getId() {
@@ -76,11 +74,11 @@ public class Estudiante {
         this.fechaNacimiento = fechaNacimiento;
     }
 
-    public String getDiccionario() {
-        return diccionario;
+    public String getDireccion() {
+        return direccion;
     }
 
-    public void setDiccionario(String diccionario) {
-        this.diccionario = diccionario;
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
     }
 }

@@ -9,34 +9,37 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "asistencias")
 public class Asistencia {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_asistencia")
     private Integer id;
 
-    @Column(name = "fecha", nullable = false)
+    @Column(nullable = false)
     private LocalDate fecha;
 
-    @Column(name = "estado", nullable = false)
+    @Enumerated(EnumType.STRING)
+    @Column( nullable = false)
     private Estado estado;
 
     @ManyToOne
-    @JoinColumn(name = "fk_estudiante", referencedColumnName = "id_estudiante")
-    @JsonBackReference
+    @JoinColumn(name = "id_estudiante",nullable = false)
     private Estudiante estudiante;
 
     @ManyToOne
-    @JoinColumn(name = "fk_curso", referencedColumnName = "id_curso")
-    @JsonBackReference
+    @JoinColumn(name = "id_curso", nullable = false)
     private Curso curso;
 
     public Asistencia() {
     }
 
-    public Asistencia(Integer id, LocalDate fecha, Estado estado) {
+
+    public Asistencia(Integer id, LocalDate fecha, Estado estado, Estudiante estudiante, Curso curso) {
         this.id = id;
         this.fecha = fecha;
         this.estado = estado;
+        this.estudiante = estudiante;
+        this.curso = curso;
     }
 
     // Getters and setters
@@ -63,4 +66,21 @@ public class Asistencia {
     public void setEstado(Estado estado) {
         this.estado = estado;
     }
+
+    public Estudiante getEstudiante() {
+        return estudiante;
+    }
+
+    public void setEstudiante(Estudiante estudiante) {
+        this.estudiante = estudiante;
+    }
+
+    public Curso getCurso() {
+        return curso;
+    }
+
+    public void setCurso(Curso curso) {
+        this.curso = curso;
+    }
 }
+

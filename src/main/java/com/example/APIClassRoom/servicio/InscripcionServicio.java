@@ -1,5 +1,6 @@
 package com.example.APIClassRoom.servicio;
 
+import com.example.APIClassRoom.ayudas.MensajesAPI;
 import com.example.APIClassRoom.modelos.Inscripcion;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,41 +15,60 @@ public class InscripcionServicio {
     @Autowired
     IInscripcionRepositorio repositorio;
 
-    // Guardar inscripción
-    public Inscripcion guardarInscripcion(Inscripcion inscripcion) {
-        return this.repositorio.save(inscripcion);
-    }
-
-    // Modificar inscripción
-    public Inscripcion modificarInscripcion(Integer id, Inscripcion datosNuevos) {
-        Optional<Inscripcion> encontrado = this.repositorio.findById(id);
-        if (encontrado.isPresent()) {
-            datosNuevos.setId(id); // Asegúrate que tu modelo tenga setId()
-            return this.repositorio.save(datosNuevos);
-        } else {
-            throw new RuntimeException("Inscripción con ID " + id + " no encontrada");
+    public Inscripcion guardarInscripcion(Inscripcion inscripcion) throws Exception {
+        try {
+            return this.repositorio.save(inscripcion);
+        } catch (Exception error) {
+            throw new Exception(error.getMessage());
         }
     }
 
-    // Buscar inscripción por ID
-    public Inscripcion buscarInscripcionPorId(Integer id) {
-        return this.repositorio.findById(id)
-                .orElseThrow(() -> new RuntimeException("Inscripción con ID " + id + " no encontrada"));
+    public Inscripcion modificarInscripcion(Integer id, Inscripcion datosNuevos) throws Exception {
+        try {
+            Optional<Inscripcion> encontrado = this.repositorio.findById(id);
+            if (encontrado.isPresent()) {
+                datosNuevos.setId(id);
+                return this.repositorio.save(datosNuevos);
+            } else {
+                throw new Exception(MensajesAPI.INSCRIPCION_NO_ENCONTRADA.getTexto());
+            }
+        } catch (Exception error) {
+            throw new Exception(error.getMessage());
+        }
     }
 
-    // Buscar todas las inscripciones
-    public List<Inscripcion> buscarTodasInscripciones() {
-        return this.repositorio.findAll();
+    public Inscripcion buscarInscripcionPorId(Integer id) throws Exception {
+        try {
+            Optional<Inscripcion> inscripcion = this.repositorio.findById(id);
+            if (inscripcion.isPresent()) {
+                return inscripcion.get();
+            } else {
+                throw new Exception(MensajesAPI.INSCRIPCION_NO_ENCONTRADA.getTexto());
+            }
+        } catch (Exception error) {
+            throw new Exception(error.getMessage());
+        }
     }
 
-    // Eliminar inscripción
-    public String eliminarInscripcion(Integer id) {
-        Optional<Inscripcion> encontrado = this.repositorio.findById(id);
-        if (encontrado.isPresent()) {
-            this.repositorio.deleteById(id);
-            return "Inscripción eliminada correctamente";
-        } else {
-            throw new RuntimeException("Inscripción con ID " + id + " no encontrada");
+    public List<Inscripcion> buscarTodasInscripciones() throws Exception {
+        try {
+            return this.repositorio.findAll();
+        } catch (Exception error) {
+            throw new Exception(error.getMessage());
+        }
+    }
+
+    public boolean eliminarInscripcion(Integer id) throws Exception {
+        try {
+            Optional<Inscripcion> inscripcion = this.repositorio.findById(id);
+            if (inscripcion.isPresent()) {
+                this.repositorio.deleteById(id);
+                return true;
+            } else {
+                throw new Exception(MensajesAPI.INSCRIPCION_NO_ENCONTRADA.getTexto());
+            }
+        } catch (Exception error) {
+            throw new Exception(error.getMessage());
         }
     }
 }

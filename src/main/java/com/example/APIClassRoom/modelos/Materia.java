@@ -18,20 +18,25 @@ public class Materia {
     private String nombre;
 
     @ManyToOne
-    @JoinColumn(name = "fk_curso", referencedColumnName = "id_curso")
-    @JsonBackReference
+    @JoinColumn(name = "id_curso", nullable = false)
     private Curso curso;
 
-    @OneToMany(mappedBy = "materia")
-    @JsonManagedReference
-    private List<Calificacion> calificaciones;
 
     public Materia() {
     }
 
-    public Materia(Integer id, String nombre) {
+    public Materia(Integer id, String nombre, Curso curso) {
         this.id = id;
         this.nombre = nombre;
+        this.curso = curso;
+    }
+
+    public Curso getCurso() {
+        return curso;
+    }
+
+    public void setCurso(Curso curso) {
+        this.curso = curso;
     }
 
     public Integer getId() {

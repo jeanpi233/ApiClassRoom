@@ -9,6 +9,7 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "calificaciones")
 public class Calificacion {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_calificacion")
@@ -21,22 +22,38 @@ public class Calificacion {
     private LocalDate fechaEvaluacion;
 
     @ManyToOne
-    @JoinColumn(name = "fk_materia", referencedColumnName = "id_materia")
-    @JsonBackReference
+    @JoinColumn(name = "id_materia", nullable = false)
     private Materia materia;
 
     @ManyToOne
-    @JoinColumn(name = "fk_estudiante", referencedColumnName = "id_estudiante")
-    @JsonBackReference
+    @JoinColumn(name = "id_estudiante", nullable = false)
     private Estudiante estudiante;
 
     public Calificacion() {
     }
 
-    public Calificacion(Integer id, BigDecimal nota, LocalDate fechaEvaluacion) {
+    public Calificacion(Integer id, BigDecimal nota, LocalDate fechaEvaluacion, Estudiante estudiante,Materia materia) {
         this.id = id;
         this.nota = nota;
         this.fechaEvaluacion = fechaEvaluacion;
+        this.estudiante = estudiante;
+        this.materia = materia;
+    }
+
+    public Materia getMateria() {
+        return materia;
+    }
+
+    public void setMateria(Materia materia) {
+        this.materia = materia;
+    }
+
+    public Estudiante getEstudiante() {
+        return estudiante;
+    }
+
+    public void setEstudiante(Estudiante estudiante) {
+        this.estudiante = estudiante;
     }
 
     public Integer getId() {

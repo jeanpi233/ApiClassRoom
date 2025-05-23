@@ -1,5 +1,6 @@
 package com.example.APIClassRoom.servicio;
 
+import com.example.APIClassRoom.ayudas.MensajesAPI;
 import com.example.APIClassRoom.modelos.Asistencia;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,41 +15,60 @@ public class AsistenciaServicio {
     @Autowired
     IAsistenciasRepositorio repositorio;
 
-    // Guardar una nueva asistencia
-    public Asistencia guardarAsistencia(Asistencia asistencia) {
-        return this.repositorio.save(asistencia);
-    }
-
-    // Modificar una asistencia existente
-    public Asistencia modificarAsistencia(Integer id, Asistencia datosNuevos) {
-        Optional<Asistencia> encontrado = this.repositorio.findById(id);
-        if (encontrado.isPresent()) {
-            datosNuevos.setId(id); // Asegúrate de tener un setter para el ID en el modelo
-            return this.repositorio.save(datosNuevos);
-        } else {
-            throw new RuntimeException("Asistencia con ID " + id + " no encontrada");
+    public Asistencia guardarAsistencia(Asistencia asistencia) throws Exception {
+        try {
+            return this.repositorio.save(asistencia);
+        } catch (Exception error) {
+            throw new Exception(error.getMessage());
         }
     }
 
-    // Buscar asistencia por ID
-    public Asistencia buscarAsistenciaPorId(Integer id) {
-        return this.repositorio.findById(id)
-                .orElseThrow(() -> new RuntimeException("Asistencia con ID " + id + " no encontrada"));
+    public Asistencia modificarAsistencia(Integer id, Asistencia datosNuevos) throws Exception {
+        try {
+            Optional<Asistencia> encontrado = this.repositorio.findById(id);
+            if (encontrado.isPresent()) {
+                datosNuevos.setId(id);
+                return this.repositorio.save(datosNuevos);
+            } else {
+                throw new Exception(MensajesAPI.ASISTENCIA_NO_ENCONTRADA.getTexto());
+            }
+        } catch (Exception error) {
+            throw new Exception(error.getMessage());
+        }
     }
 
-    // Buscar todas las asistencias
-    public List<Asistencia> buscarTodasAsistencias() {
-        return this.repositorio.findAll();
+    public Asistencia buscarAsistenciaPorId(Integer id) throws Exception {
+        try {
+            Optional<Asistencia> encontrado = this.repositorio.findById(id);
+            if (encontrado.isPresent()) {
+                return encontrado.get();
+            } else {
+                throw new Exception(MensajesAPI.ASISTENCIA_NO_ENCONTRADA.getTexto());
+            }
+        } catch (Exception error) {
+            throw new Exception(error.getMessage());
+        }
     }
 
-    // Eliminar una asistencia por ID
-    public String eliminarAsistencia(Integer id) {
-        Optional<Asistencia> encontrado = this.repositorio.findById(id);
-        if (encontrado.isPresent()) {
-            this.repositorio.deleteById(id);
-            return "Asistencia eliminada correctamente";
-        } else {
-            throw new RuntimeException("Asistencia con ID " + id + " no encontrada");
+    public List<Asistencia> buscarTodasAsistencias() throws Exception {
+        try {
+            return this.repositorio.findAll();
+        } catch (Exception error) {
+            throw new Exception(error.getMessage());
+        }
+    }
+
+    public boolean eliminarAsistencia(Integer id) throws Exception {
+        try {
+            Optional<Asistencia> encontrado = this.repositorio.findById(id);
+            if (encontrado.isPresent()) {
+                this.repositorio.deleteById(id);
+                return true;
+            } else {
+                throw new Exception(MensajesAPI.ASISTENCIA_NO_ENCONTRADA.getTexto());
+            }
+        } catch (Exception error) {
+            throw new Exception(error.getMessage());
         }
     }
 }
