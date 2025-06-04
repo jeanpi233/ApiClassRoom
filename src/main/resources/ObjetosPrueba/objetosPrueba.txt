@@ -1,11 +1,11 @@
 /Usuario
 {
   "nombre": "Juan fernando torres zapata",
-  "correo": "Juanyya06@gmail.com",
-  "clave": "admi123",
-  "telefono": "32159956741",
-  "tipoUsuario": "ESTUDIANTE"
-}
+   "correo": "Juanyya06@gmail.com",
+   "clave": "admi123",
+   "telefono": "32159956741",
+   "tipoUsuario": "ESTUDIANTE"
+ }
 /Docente
 {
   "especialidad": "Ingeniero de sistemas",
